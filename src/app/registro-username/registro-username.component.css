@@ -1,0 +1,167 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  background-color: #a02c4a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+}
+
+.container {
+  background-color: white;
+  padding: 5vh 5%;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  width: 40%;
+  max-width: 500px;
+  min-width: 300px;
+  margin: 5vh auto;
+}
+
+.text-center {
+  margin-bottom: 30px;
+}
+
+.text-center img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+
+h1 {
+  color: #B38E5D;
+  font-family: "Days One", sans-serif;
+  font-size: 5vh;
+  text-shadow: #A39393 2px 3px 10px;
+  margin-top: 15px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+  color: #a02c4a;
+  font-size: 1.2rem;
+}
+
+input.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+input.form-control:focus {
+  border-color: #a02c4a;
+  outline: none;
+  box-shadow: 0 0 5px rgba(160, 44, 74, 0.5);
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-size: 16px;
+}
+
+.btn-secondary {
+  background-color: gray;
+  color: white;
+  margin-right: 20px;
+}
+
+.btn-secondary:hover {
+  background-color: #555;
+}
+
+.btn-primary {
+  background-color: #a02c4a;
+  color: white;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.btn-primary:hover {
+  background-color: #891c3a;
+}
+
+.btn-primary:disabled {
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 15px;
+  text-align: center;
+}
+
+/* Estilo para la ID en la esquina superior derecha */
+.id-display {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container {
+    width: 80%;
+    padding: 3vh 5%;
+  }
+
+  h1 {
+    font-size: 4vh;
+  }
+
+  .text-center img {
+    width: 120px;
+    height: 120px;
+  }
+
+  .btn-secondary {
+    margin-right: 0;
+    margin-bottom: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: 90%;
+    min-width: 0;
+  }
+
+  h1 {
+    font-size: 3.5vh;
+  }
+
+  .text-center img {
+    width: 100px;
+    height: 100px;
+  }
+
+  label {
+    font-size: 1rem;
+  }
+}

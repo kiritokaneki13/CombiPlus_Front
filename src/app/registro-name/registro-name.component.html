@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Registro de Persona</title>
+</head>
+<body>
+  <div class="container mt-5">
+    <div class="text-center mb-4">
+      <img src="/images/combiplus_logo.png" alt="Logo" width="200">
+      <h1>Registro de Persona</h1>
+    </div>
+
+    <form (ngSubmit)="registrarUsuario()" #formRegistro="ngForm">
+      <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" [(ngModel)]="persona.nombre" name="nombre" class="form-control" placeholder="Ingresa tu nombre" required>
+      </div>
+
+      <div class="form-group">
+        <label for="apellidoPat">Apellido Paterno:</label>
+        <input type="text" id="apellidoPat" [(ngModel)]="persona.apellido_pat" name="apellido_pat" class="form-control" placeholder="Apellido paterno" required>
+      </div>
+
+      <div class="form-group">
+        <label for="apellidoMat">Apellido Materno:</label>
+        <input type="text" id="apellidoMat" [(ngModel)]="persona.apellido_mat" name="apellido_mat" class="form-control" placeholder="Apellido materno" required>
+      </div>
+
+      <div class="form-group">
+        <label for="sexo">Sexo:</label>
+        <select id="sexo" [(ngModel)]="persona.sexo" name="sexo" class="form-control" required>
+          <option value="3">Selecciona tu sexo</option>
+          <option value="1">Masculino</option>
+          <option value="0">Femenino</option>
+        </select>
+      </div>
+
+      <div class="d-flex justify-content-between mt-4">
+        <button type="button" class="btn btn-secondary" (click)="regresarAlLogin()">Regresar</button>
+        <button type="submit" class="btn btn-primary">Siguiente</button>
+      </div>
+    </form>
+
+    <p *ngIf="error" style="color: red; margin-top: 10px;">{{ error }}</p>
+  </div>
+</body>
+</html>

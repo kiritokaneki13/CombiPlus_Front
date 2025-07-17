@@ -1,0 +1,206 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Days+One" />
+    <title>Tabla de Usuarios</title>
+</head>
+<body>
+    <div class="container">
+        <div class="header text-center">
+            <img src="/images/combiplus_logo.png" alt="CombiPlus Logo" class="logo">
+            <h1>Tabla de Usuarios</h1>
+        </div>
+
+        <button class="button registrar2" (click)="openRegisterDialog()">Agregar Nuevo Usuario</button>
+
+        <dialog id="modal4">
+          <form (ngSubmit)="registrarUsuario()">
+              <h3>Resgistro de Usuario</h3>
+
+              <div class="form-container">
+                  <div class="form-group">
+                    <label>Tipo de Usuario:</label>
+                    <select [(ngModel)]="usuario.id_tipo_persona" name="tipoUsuario" required>
+                      <option value="">Selecciona un tipo de usuario</option>
+                      <option *ngFor="let tipo of Tusuarios" [value]="tipo.id_tipo_persona">
+                        {{ tipo.nombre }}
+                      </option>
+                    </select>
+
+
+                  </div>
+
+                  <div class="form-group">
+                      <label>Nombre:</label>
+                      <input type="text" [(ngModel)]="usuario.nombre" name="nombre" placeholder="Nombre del Usuario" required>
+                  </div>
+
+                  <div class="form-group">
+                      <label>Apellido Paterno:</label>
+                      <input type="text" [(ngModel)]="usuario.apellido_pat" name="apellidoPat" placeholder="Apellido Paterno" required>
+                  </div>
+
+                  <div class="form-group">
+                      <label>Apellido Materno:</label>
+                      <input type="text" [(ngModel)]="usuario.apellido_mat" name="apellidoMat" placeholder="Apellido Materno" required>
+                  </div>
+
+                  <div class="form-group">
+                      <label>CURP:</label>
+                      <input type="text" [(ngModel)]="usuario.curp" name="curp" placeholder="CURP" required>
+                  </div>
+
+                  <div class="form-group">
+                      <label>RFC:</label>
+                      <input type="text" [(ngModel)]="usuario.rfc" name="rfc" placeholder="RFC" required>
+                  </div>
+
+                  <div class="form-group">
+                      <label>Sexo:</label>
+                      <select [(ngModel)]="usuario.sexo" name="sexo">
+                          <option value="1">Masculino</option>
+                          <option value="0">Femenino</option>
+                      </select>
+                  </div>
+
+                  <div class="form-group">
+                      <label>Fecha de Nacimiento:</label>
+                      <input type="date" [(ngModel)]="usuario.fecha_nac" name="fechaNac" required>
+                  </div>
+
+                  <div class="form-group">
+                      <label>Estado:</label>
+                      <select [(ngModel)]="usuario.activo" name="activo">
+                          <option value="1">Activo</option>
+                          <option value="0">Inactivo</option>
+                      </select>
+                  </div>
+              </div>
+
+              <div class="dialog-buttons">
+                  <input class="button registrar" type="submit" value="Guardar">
+                  <button class="button salir" type="button" (click)="closeRegisterFormDialog()">Cerrar</button>
+              </div>
+          </form>
+      </dialog>
+
+        <table class="table mt-3">
+            <thead>
+                <tr>
+                    <th>Tipo de Usuario</th>
+                    <th>Nombre</th>
+                    <th>Apellido Paterno</th>
+                    <th>Apellido Materno</th>
+                    <th>CURP</th>
+                    <th>RFC</th>
+                    <th>Sexo</th>
+                    <th>Fecha de Nacimiento</th>
+                    <th>Activo</th>
+                    <th>Eliminar</th>
+                    <th>Editar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let usuario of usuarios">
+                    <td>{{ usuario.cvetipopersona}}</td>
+                    <td>{{ usuario.nombre }}</td>
+                    <td>{{ usuario.apellido_pat }}</td>
+                    <td>{{ usuario.apellido_mat }}</td>
+                    <td>{{ usuario.curp }}</td>
+                    <td>{{ usuario.rfc }}</td>
+                    <td>{{ usuario.sexo == 1 ? 'Masculino' : 'Femenino' }}</td>
+                    <td>{{ usuario.fecha_nac | date:'dd/MM/yyyy' }}</td>
+                    <td>{{ usuario.activo == 1 ? 'Activo' : 'Inactivo' }}</td>
+                    <td><button class="button salir" (click)="openDeleteDialog(usuario.id_personas)">Eliminar</button></td>
+                    <td><button class="button registrar" (click)="openEditDialog(usuario)">Editar</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <dialog id="modal2">
+      <h3>¿Estás seguro que deseas eliminar este usuario?</h3>
+      <div class="dialog-buttons">
+        <button class="button" (click)="deleteUser()">Eliminar</button>
+        <button class="button" (click)="closeDeleteDialog()">Cancelar</button>
+      </div>
+    </dialog>
+
+
+    <dialog id="modal3">
+      <form (ngSubmit)="editarUsuario()">
+          <h3>Edición de Usuario</h3>
+
+          <div class="form-container">
+              <div class="form-group">
+                  <label>Tipo de Usuario:</label>
+                  <select [(ngModel)]="usuarioEditado.id_tipo_persona" name="tipoUsuario" required>
+                      <option value="0">Selecciona un tipo de usuario</option>
+                      <option *ngFor="let tipo of Tusuarios" [value]="tipo.id_tipo_persona">
+                          {{ tipo.nombre }}
+                      </option>
+                  </select>
+              </div>
+
+              <div class="form-group">
+                  <label for="nombre">Nombre:</label>
+                  <input type="text" [(ngModel)]="usuarioEditado.nombre" name="nombre" placeholder="Nombre del Usuario" required>
+              </div>
+
+              <div class="form-group">
+                  <label for="apellidoPat">Apellido Paterno:</label>
+                  <input type="text" [(ngModel)]="usuarioEditado.apellido_pat" name="apellidoPat" placeholder="Apellido Paterno" required>
+              </div>
+
+              <div class="form-group">
+                  <label for="apellidoMat">Apellido Materno:</label>
+                  <input type="text" [(ngModel)]="usuarioEditado.apellido_mat" name="apellidoMat" placeholder="Apellido Materno" required>
+              </div>
+
+              <div class="form-group">
+                  <label for="curp">CURP:</label>
+                  <input type="text" [(ngModel)]="usuarioEditado.curp" name="curp" placeholder="CURP" required>
+              </div>
+
+              <div class="form-group">
+                  <label for="rfc">RFC:</label>
+                  <input type="text" [(ngModel)]="usuarioEditado.rfc" name="rfc" placeholder="RFC" required>
+              </div>
+
+              <div class="form-group">
+                  <label for="sexo">Sexo:</label>
+                  <select [(ngModel)]="usuarioEditado.sexo" name="sexo">
+                    <option value="2">Seleccionar Sexo</option>
+                      <option value="1">Masculino</option>
+                      <option value="0">Femenino</option>
+                  </select>
+              </div>
+
+              <div class="form-group">
+                  <label for="fechaNac">Fecha de Nacimiento:</label>
+                  <input type="date" [(ngModel)]="usuarioEditado.fecha_nac" name="fechaNac" required>
+              </div>
+
+              <div class="form-group">
+                  <label for="activo">Estado:</label>
+                  <select [(ngModel)]="usuarioEditado.activo" name="activo">
+                      <option value="2">Seleccionar Estado</option>
+                      <option value="1">Activo</option>
+                      <option value="0">Inactivo</option>
+                  </select>
+              </div>
+          </div>
+
+          <div class="dialog-buttons">
+              <input class="button registrar" type="submit" value="Guardar">
+              <button class="button salir" type="button" (click)="closeEditFormDialog()">Cerrar</button>
+          </div>
+      </form>
+  </dialog>
+
+
+</body>
+</html>

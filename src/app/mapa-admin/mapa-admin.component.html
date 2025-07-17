@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-draw/dist/leaflet.draw.css" />
+  <title>Mapa de Rutas y Paradas</title>
+</head>
+<body>
+  <div class="container mt-4">
+    <h2 class="text-center">Mapa de Rutas y Paradas</h2>
+
+    <!-- Selección de Ruta y Parada -->
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="rutaSelect">Selecciona una Ruta:</label>
+        <select id="rutaSelect" class="form-control" [(ngModel)]="selectedRutaId" (ngModelChange)="onRutaChange()">
+          <option value="">Seleccione una ruta</option>
+          <option *ngFor="let ruta of rutas" [value]="ruta.id_ruta">{{ ruta.nombre }}</option>
+        </select>
+        <button class="btn btn-primary mt-2 mr-2" (click)="editarRuta()" [disabled]="!selectedRutaId">
+          {{ editandoRuta ? 'Guardar' : 'Editar Ruta' }}
+        </button>
+        <button class="btn btn-danger mt-2" (click)="eliminarRutaSeleccionada()" [disabled]="!selectedRutaId">Eliminar Ruta</button>
+
+      </div>
+      <div class="col-md-6">
+        <label for="paradaSelect">Selecciona una Parada:</label>
+        <select id="paradaSelect" class="form-control" [(ngModel)]="selectedParadaId" (ngModelChange)="onParadaChange()">
+          <option value="">Seleccione una parada</option>
+          <option *ngFor="let parada of paradas" [value]="parada.id_parada">{{ parada.nombre }}</option>
+        </select>
+        <button class="btn btn-primary mt-2 mr-2" (click)="editarParada()" [disabled]="!selectedParadaId">
+          {{ editandoParada ? 'Guardar' : 'Editar Parada' }}
+        </button>
+        <button class="btn btn-danger mt-2" (click)="eliminarParadaSeleccionada()" [disabled]="!selectedParadaId">Eliminar Parada</button>
+      </div>
+    </div>
+    <div class="text-center mt-3">
+      <button class="btn btn-success mr-2" (click)="mostrarTodasLasParadas()">Mostrar Paradas</button>
+      <button class="btn btn-secondary" (click)="limpiarTodo()">Limpiar Mapa</button>
+      <button class="btn btn-info mr-2" (click)="habilitarSimulacion()">Habilitar Simulación</button>
+      <button class="btn btn-warning" (click)="deshabilitarSimulacion()">Deshabilitar Simulación</button>
+      <button class="btn btn-warning" (click)="obtenerCombisActivas()"> Buscar Combis</button>
+
+    </div>
+    <div id="map" style="height: 500px;"></div>
+  </div>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet-draw/dist/leaflet.draw.js"></script>
+</body>
+</html>
