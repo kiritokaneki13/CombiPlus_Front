@@ -7,8 +7,8 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class EditarService {
-  private apiUrl = 'http://localhost:3000/api/usuarios';
-  private apiUrlE = 'http://localhost:3000/api/EditarUsername';
+  private apiUrl = 'https://localhost:3000/api/usuarios';
+  private apiUrlE = 'https://localhost:3000/api/EditarUsername';
 
   constructor(private http: HttpClient) {}
 

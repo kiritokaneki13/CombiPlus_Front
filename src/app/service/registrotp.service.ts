@@ -9,7 +9,7 @@ import {jwtDecode} from 'jwt-decode';
   providedIn: 'root'
 })
 export class Registro_TPService {
-  private apiUrl = 'http://localhost:3000/api'; // URL de tu API
+  private apiUrl = 'https://localhost:3000/api'; // URL de tu API
 
   constructor(private http: HttpClient, private router: Router) {}
 

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class RutasService {
-  private apiUrl = 'http://localhost:3000/api';
+  private apiUrl = 'https://localhost:3000/api';
 
   constructor(private http: HttpClient) {}
 

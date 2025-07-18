@@ -6,9 +6,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ObtenerService {
-  private apiUrlUsuarios = 'http://localhost:3000/api/personas';
-  private apiUrlTiposUsuarios = 'http://localhost:3000/api/Tpersonas';
-  private apiUrlSesiones = 'http://localhost:3000/api/sesiones';
+  private apiUrlUsuarios = 'https://localhost:3000/api/personas';
+  private apiUrlTiposUsuarios = 'https://localhost:3000/api/Tpersonas';
+  private apiUrlSesiones = 'https://localhost:3000/api/sesiones';
 
   constructor(private http: HttpClient) {}
 

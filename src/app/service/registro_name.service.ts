@@ -8,7 +8,7 @@ import { throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class Registro_NameService {
-  private apiUrl = 'http://localhost:3000/api/Registropersonasp1';
+  private apiUrl = 'https://localhost:3000/api/Registropersonasp1';
 
   constructor(private http: HttpClient) {}
 

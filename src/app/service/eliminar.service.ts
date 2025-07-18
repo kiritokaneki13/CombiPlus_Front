@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class EliminarService {
-  private apiUrl = 'http://localhost:3000/api/usuarios';
+  private apiUrl = 'https://localhost:3000/api/usuarios';
 
   constructor(private http: HttpClient) {}
 
