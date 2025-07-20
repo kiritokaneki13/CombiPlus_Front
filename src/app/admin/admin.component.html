@@ -127,6 +127,10 @@
         <button class="button" (click)="deleteUser()">Eliminar</button>
         <button class="button" (click)="closeDeleteDialog()">Cancelar</button>
       </div>
+      <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+      </div>
+
     </dialog>
 
 

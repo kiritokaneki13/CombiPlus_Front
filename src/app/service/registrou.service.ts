@@ -14,3 +14,4 @@ export class RegistrosService {
     return this.http.post(this.apiUrl, user, { headers: { 'Content-Type': 'application/json' } });
   }
 }
+/*no hay necesidad de auth */

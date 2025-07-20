@@ -65,6 +65,9 @@
                 <button class="button mr-2" (click)="deleteUser()">Eliminar</button>
                 <button class="button" (click)="closeDeleteDialog()">Cancelar</button>
             </div>
+            <div *ngIf="errorMessage" class="alert alert-danger">
+            {{ errorMessage }}
+            </div>
         </dialog>
 
         <!-- Diálogo de registro de usuario -->

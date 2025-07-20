@@ -18,6 +18,7 @@ export class AdminComponent implements OnInit {
   usuarios: any[] = [];
   selectedUsuario: any = null;
   usuarioEditado: any = {};
+  errorMessage: string = '';
   usuario = {
     id_tipo_persona: 0,
     nombre: '',
@@ -192,23 +193,31 @@ export class AdminComponent implements OnInit {
   }
 
   deleteUser(): void {
-    if (this.selectedUsuario) {
-      const idUsuario = this.selectedUsuario.id_personas;
-      console.log('Eliminando usuario con ID:', idUsuario);
+  if (this.selectedUsuario) {
+    const idUsuario = this.selectedUsuario.id_personas;
+    console.log('Eliminando usuario con ID:', idUsuario);
 
-      this.eliminarService.eliminarUsuario(idUsuario).subscribe(
-        (response: any) => {
-          console.log('Usuario eliminado correctamente', response);
-          this.obtenerUsuarios();
-          this.closeDeleteDialog();
-        },
-        (error: any) => {
-          console.error('Error al eliminar usuario', error);
+    this.eliminarService.eliminarUsuario(idUsuario).subscribe(
+      (response: any) => {
+        console.log('Usuario eliminado correctamente', response);
+        this.errorMessage = '';
+        this.obtenerUsuarios();
+        this.closeDeleteDialog();
+      },
+      (error: any) => {
+        console.error('Error al eliminar usuario', error);
+        if (error.status === 404) {
+          this.errorMessage = 'El usuario no fue encontrado para eliminar.';
+        } else {
+          this.errorMessage = 'Ocurrió un error al eliminar el usuario.';
         }
-      );
-    } else {
-      console.error('No se ha seleccionado un usuario para eliminar.');
-    }
+      }
+    );
+  } else {
+    console.error('No se ha seleccionado un usuario para eliminar.');
+    this.errorMessage = 'Debes seleccionar un usuario para eliminar.';
   }
+}
+
 
 }

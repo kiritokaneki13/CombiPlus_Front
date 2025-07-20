@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpHeaders } from '@angular/common/http';
 import { Registro_TPService } from '../service/registrotp.service';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common'; // 👈 IMPORTA CommonModule
+import { CommonModule } from '@angular/common'; //
 import { FormsModule } from '@angular/forms';
 @Component({
   standalone: true,
@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./registro-tipop.component.css']
 })
 export class RegistroTipopComponent {
-  tusuarioRegistro: any = {}; // Solo necesitas id_tipo_persona
+  tusuarioRegistro: any = {};
   error: string = '';
 
   constructor(
