@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Registro de Persona</title>
+    <style>
+      /* Estilo para que la ID se vea en la esquina superior derecha */
+      .id-display {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 14px;
+      }
+    </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <div class="text-center mb-4">
+      <img src="/images/combiplus_logo.png" alt="Logo" width="200">
+      <h1>Registro de Persona</h1>
+    </div>
+
+    <form (ngSubmit)="registarUsuario()" #formRegistro="ngForm">
+      <label>Tipo de Usuario:</label>
+      <br>
+
+      <!-- Contenedor de los radio buttons -->
+      <div class="radio-container">
+        <input type="radio" name="usuario" id="jefe" [(ngModel)]="tusuarioRegistro.id_tipo_persona" [value]="2" />
+        <label for="jefe" class="radio-label">Jefe</label>
+
+        <input type="radio" name="usuario" id="pasajero" [(ngModel)]="tusuarioRegistro.id_tipo_persona" [value]="4" />
+        <label for="pasajero" class="radio-label">Pasajero</label>
+      </div>
+      <button type="button" class="btn btn-secondary" (click)="regresarAlrn()">Regresar</button>
+      <button type="submit" class="btn btn-primary btn-block">Siguiente</button>
+    </form>
+
+
+  </div>
+</body>
+</html>
+
