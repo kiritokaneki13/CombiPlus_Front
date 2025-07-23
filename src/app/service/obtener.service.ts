@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -13,15 +13,27 @@ export class ObtenerService {
   constructor(private http: HttpClient) {}
 
   obtenerUsuarios(): Observable<any> {
-    return this.http.get(this.apiUrlUsuarios);
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get(this.apiUrlUsuarios, { headers });
   }
 
   obtenerSesiones(): Observable<any> {
-    return this.http.get(this.apiUrlSesiones);
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get(this.apiUrlSesiones,{ headers });
   }
 
   obtenerTUsuarios(): Observable<any> {
-    return this.http.get(this.apiUrlTiposUsuarios);
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get(this.apiUrlTiposUsuarios, { headers });
   }
 }
 

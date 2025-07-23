@@ -22,7 +22,8 @@
             <button class="button registrar2 mb-2" (click)="openRegisterDialog()">Agregar Nuevo Usuario</button>
             <button class="button registrar2 mb-2" (click)="openMapDialog()">Parada Nueva</button>
             <button class="button registrar2 mb-2" (click)="openRouteDialog()">Agregar Ruta</button>
-            <button class="button registrar2 mb-2" (click)="goToMap()">Mapa</button> <!-- Botón nuevo -->
+            <button class="button registrar2 mb-2" (click)="goToMap()">Mapa</button>
+            <button class="button registrar2 mb-2" (click)="Finish()">Cerrar Sesión</button>
         </div>
 
         <!-- Tabla de usuarios -->
@@ -56,6 +57,9 @@
               </tr>
             </tbody>
           </table>
+          <div *ngIf="errorMessage" class="alert alert-danger">
+                      {{ errorMessage }}
+                      </div>
         </div>
 
         <!-- Diálogo de confirmación de eliminación -->

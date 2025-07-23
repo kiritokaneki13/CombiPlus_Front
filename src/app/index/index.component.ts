@@ -12,7 +12,6 @@ import * as L from 'leaflet';
 import 'leaflet-draw';
 import 'leaflet-draw/dist/leaflet.draw.css';
 
-// Add these type declarations
 declare module 'leaflet' {
   namespace Control {
     class Draw extends Control {
@@ -75,11 +74,11 @@ export class IndexComponent implements OnInit {
     fecha_nac: '',
     activo: 2,
   };
-  rutaNombre: string = ''; // Nombre de la ruta
+  rutaNombre: string = '';
   map!: L.Map;
   mapRoute!: L.Map;
-  drawnItems!: L.FeatureGroup; // Capa de rutas dibujadas
-  marker!: L.Marker;  // Declaramos el marcador
+  drawnItems!: L.FeatureGroup;
+  marker!: L.Marker;
 
   constructor(
     private obtenerService: ObtenerService,
@@ -100,6 +99,10 @@ export class IndexComponent implements OnInit {
   goToMap() {
     this.router.navigate(['/mapa-admin']);
   }
+  Finish() {
+    localStorage.removeItem('token');
+    this.router.navigate(['']);
+  }
 
   obtenerUsuarios(): void {
     this.obtenerService.obtenerUsuarios().subscribe(
@@ -110,6 +113,11 @@ export class IndexComponent implements OnInit {
       },
       (error) => {
         console.error('Error al obtener usuarios:', error);
+         if (error.status === 404) {
+          this.errorMessage = 'El usuario no fue encontrado para eliminar.';
+        } else {
+          this.errorMessage = 'No se ha Iniciado Sesion.';
+        }
       }
     );
   }
@@ -173,6 +181,11 @@ export class IndexComponent implements OnInit {
         console.error('Error al registrar:', error);
         console.log(this.usuario);
         alert('Error al registrar el usuario');
+        if (error.status === 404) {
+          this.errorMessage = 'El usuario no fue encontrado para eliminar.';
+        } else {
+          this.errorMessage = 'No se ha Iniciado Sesion.';
+        }
       }
     );
   }
@@ -195,6 +208,11 @@ export class IndexComponent implements OnInit {
       },
       (error) => {
         console.error('Error al obtener Tipos de usuarios:', error);
+        if (error.status === 404) {
+          this.errorMessage = 'El usuario no fue encontrado para eliminar.';
+        } else {
+          this.errorMessage = 'No se ha Iniciado Sesion.';
+        }
       }
     );
   }
@@ -243,6 +261,11 @@ export class IndexComponent implements OnInit {
       },
       (error: any) => {
         console.error('Error al editar usuario', error);
+        if (error.status === 404) {
+          this.errorMessage = 'El usuario no fue encontrado para eliminar.';
+        } else {
+          this.errorMessage = 'No se ha Iniciado Sesion.';
+        }
       }
     );
   }
@@ -292,7 +315,6 @@ export class IndexComponent implements OnInit {
   }
 }
 
-// 📍 Abrir modal de Paradas
 openMapDialog(): void {
   const modal = document.getElementById('modalMap') as HTMLDialogElement | null;
   if (modal) {
@@ -303,7 +325,6 @@ openMapDialog(): void {
   }
 }
 
-// 📍 Inicializar mapa para Paradas
 initMap(): void {
   this.map = L.map('map').setView([17.9869, -92.9303], 12);
 
@@ -326,17 +347,14 @@ initMap(): void {
   });
 }
 
-// 📍 Agregar parada temporalmente
 addStop(): void {
   if (!this.nuevaParada.nombre) {
     alert('Por favor, ingresa el nombre de la parada.');
     return;
   }
-
   console.log('Parada agregada temporalmente:', this.nuevaParada);
 }
 
-// 📍 Guardar Parada en el backend
 saveStop(): void {
   if (!this.nuevaParada.nombre || !this.nuevaParada.latitud || !this.nuevaParada.longitud) {
     alert('Debes ingresar un nombre y seleccionar una ubicación en el mapa.');
@@ -352,16 +370,19 @@ saveStop(): void {
     (error) => {
       console.error('Error al guardar parada:', error);
       alert('Error al guardar la parada.');
+      if (error.status === 404) {
+          this.errorMessage = 'El usuario no fue encontrado para eliminar.';
+        } else {
+          this.errorMessage = 'No se ha Iniciado Sesion.';
+        }
     }
   );
 }
 
-// 📍 Cerrar el modal de Paradas
 closeMapDialog(): void {
   (document.getElementById('modalMap') as HTMLDialogElement).close();
 }
 
-// 🛣️ Inicializar mapa para Rutas
 initRouteMap(): void {
   setTimeout(() => {
     if (!document.getElementById('mapRoute')) {
@@ -452,45 +473,44 @@ saveRoute(): void {
     (error) => {
       console.error('Error al guardar ruta:', error);
       alert('Error al guardar la ruta.');
+      if (error.status === 404) {
+          this.errorMessage = 'El usuario no fue encontrado para eliminar.';
+        } else {
+          this.errorMessage = 'No se ha Iniciado Sesion.';
+        }
     }
   );
 }
 
-// 🛣️ Limpiar ruta dibujada
 clearRoute(): void {
   this.drawnItems.clearLayers();
   alert('Ruta borrada');
 }
 
 toggleActivo(usuario: any): void {
-  // Mostrar el estado previo de 'activo' en consola
   console.log(`Estado previo de ${usuario.nombre}: ${usuario.activo === 1 ? 'Activo' : 'Inactivo'}`);
 
-  // Validar que el valor de 'activo' sea el esperado (0 o 1)
-  // Si el valor está en 1 (activo), el checkbox estará marcado
-  // Si el valor está en 0 (inactivo), el checkbox estará desmarcado
-
-  // Crear el objeto con los datos para enviar al backend
   const usuarioActivos = {
-    id: usuario.id_personas,  // Se pasa el ID del usuario
-    activo: usuario.activo  // Se pasa el nuevo estado (activo = 1 o inactivo = 0)
+    id: usuario.id_personas,
+    activo: usuario.activo
   };
 
-  console.log('Datos obtenidos para actualizar estado:', usuarioActivos);  // Verificación en consola
+  console.log('Datos obtenidos para actualizar estado:', usuarioActivos);
 
-  // Llamada al servicio para actualizar el estado en la base de datos
   this.editarService.editarUsuario(usuarioActivos).subscribe(
     (response: any) => {
-      // Mensaje en consola si la actualización es exitosa
       console.log(`Estado de usuario ${usuario.nombre} actualizado a ${usuario.activo === 1 ? 'Activo' : 'Inactivo'}`);
 
-      // Después de la respuesta exitosa, se actualiza la lista de usuarios
       this.obtenerUsuarios();
     },
     (error: any) => {
       console.error('Error al actualizar el estado de activo:', error);
-      // Si ocurre un error, revertimos el cambio de estado (esto es solo por seguridad)
       usuario.activo = usuario.activo === 1 ? 0 : 1;
+        if (error.status === 404) {
+          this.errorMessage = 'El usuario no fue encontrado para eliminar.';
+        } else {
+          this.errorMessage = 'No se ha Iniciado Sesion.';
+        }
     }
   );
 }
@@ -502,53 +522,42 @@ opensesionDialog(usuario: any): void {
   this.username.id = usuario.id_personas;
   this.username.alias = usuario.alias;
 
-  // Muestra el modal
   (document.getElementById('modal5') as HTMLDialogElement).showModal();
   console.log("Usuario a editar:", this.username.id);
   console.log("Usuario a editar:", this.username);
 }
 
 closesesionFormDialog(): void {
-  // Cierra el modal
   (document.getElementById('modal5') as HTMLDialogElement).close();
 }
 
 eorsesion(): void {
-  // Verifica si existe un usuario seleccionado
   if (!this.selectedUsuario) return;
 
-  // Si no hay alias (sesión no iniciada), proceder con el registro
   if (!this.username.alias) {
     if (!this.username.username || !this.username.password || !this.username.conpassword) {
       this.error = 'Todos los campos son obligatorios, wey.';
       console.error("❌ Faltan datos:", this.username);
       return;
     }
-
-    // Verifica que la contraseña tenga al menos 8 caracteres
     if (this.username.password.length < 8) {
       this.error = 'La contraseña debe tener al menos 8 caracteres.';
       console.error("❌ Contraseña demasiado corta");
       return;
     }
-
-    // Verifica que las contraseñas coincidan
     if (this.username.password !== this.username.conpassword) {
       this.error = 'Las contraseñas no coinciden, cabrón.';
       console.error("❌ Las contraseñas no coinciden");
       return;
     }
-
-    // Prepara los datos para el registro
     const data = {
-      id_persona: this.selectedUsuario.id_personas,  // Usamos el id_persona del token
+      id_persona: this.selectedUsuario.id_personas,
       username: this.username.username,
-      password: this.username.password // Asegúrate de usar 'password' correctamente
+      password: this.username.password
     };
 
     console.log("⚡ Enviando datos de registro:", data);
 
-    // Llama al servicio para registrar el usuario
     this.registrotps.registrarUser(data).subscribe(
       (response: any) => {
         console.log('✅ Persona registrada:', response);
@@ -559,15 +568,19 @@ eorsesion(): void {
       (error: any) => {
         console.error('❌ Error al registrar:', error);
         this.error = 'Hubo un problema al registrar. Inténtalo de nuevo.';
+          if (error.status === 404) {
+          this.errorMessage = 'El usuario no fue encontrado para eliminar.';
+        } else {
+          this.errorMessage = 'No se ha Iniciado Sesion.';
+        }
       }
+
     );
   } else {
-    // Si hay un alias (sesión iniciada), proceder con la edición del usuario
 
     this.username.id = this.selectedUsuario.id_personas;
     console.log("Usuario a editar:", this.username);
 
-    // Verifica si todos los campos de usuarioEditado están completos
     for (const key in this.username) {
       if (this.username[key] === '' || this.username[key] === null) {
         console.error(`Error: El campo ${key} está vacío.`);
@@ -576,20 +589,16 @@ eorsesion(): void {
       }
     }
 
-    // Compara los datos actuales con los datos editados
     const cambios = Object.keys(this.username).some(
       (key) => this.username[key] !== this.selectedUsuario[key]
     );
 
-    // Si no hay cambios, no hacer nada
     if (!cambios) {
       console.log('No hay cambios en los datos, no se actualiza.');
       this.closesesionFormDialog()
       return;
     }
     console.log('Usuarios',cambios );
-
-    // Llama al servicio para editar el usuario
     this.editarService.editarUser(this.username).subscribe(
       (response: any) => {
         console.log('Usuario editado correctamente', response);
@@ -600,7 +609,11 @@ eorsesion(): void {
       (error: any) => {
         console.error('❌ Error al editar usuario', error);
         this.error = 'Hubo un problema al editar el usuario. Inténtalo de nuevo.';
-
+          if (error.status === 404) {
+          this.errorMessage = 'El usuario no fue encontrado para eliminar.';
+        } else {
+          this.errorMessage = 'No se ha Iniciado Sesion.';
+        }
       }
     );
   }
