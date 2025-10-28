@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   width: 100%;
@@ -11,24 +12,12 @@ html, body {
   overflow: hidden;
 }
 
-.container {
-  background-color: white;
-  padding: 5vh 5%;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  width: 90%;
-  max-width: 1200px;
-  overflow-y: auto;
-  max-height: 90vh;
-}
-
 h2 {
-  color: #B38E5D;
+  color: #b38e5d;
   margin: 0 0 20px 0;
   font-family: "Days One", sans-serif;
   font-size: 4vh;
-  text-shadow: #A39393 2px 3px 10px;
+  text-shadow: #a39393 2px 3px 10px;
 }
 
 .row.mb-3 {
